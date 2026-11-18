@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-script: "Kalam", cursive;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-pine: #234740;
+  --color-pine-deep: #17302B;
+  --color-pine-soft: #2E5A52;
+  --color-amber: #F5A623;
+  --color-amber-hover: #E09214;
+  --color-ink: #17302B;
+  --color-muted: #556B66;
+  --color-canvas: #FFFFFF;
+  --color-tint: #F4F7F6;
+  --color-hairline: #E2EAE7;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background-color: var(--color-canvas);
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-sans);
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 2px;
+  }
+}
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Signature HopeHarbor-inspired amber heading underline */
+.heading-amber-underline {
+  display: inline-block;
+  padding-bottom: 0.35rem;
+  border-bottom: 3px solid var(--color-amber);
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-up-delayed {
+  animation: fadeUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+/* Smooth opening entrance for top floating navigation bar */
+@keyframes navBarDropIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -14px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.animate-nav-drop {
+  animation: navBarDropIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Smooth sequential transition for Seven Core Programmes preview stage */
+@keyframes programmeStageSwap {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0) scale(0.992);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.animate-programme-swap {
+  animation: programmeStageSwap 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+
+/* Synchronized amber progress bar on active programme item */
+@keyframes programmeProgressFill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.programme-progress-bar {
+  transform-origin: left center;
+  animation: programmeProgressFill var(--programme-duration, 4500ms) linear both;
+  will-change: transform;
+}
+
+/* Slow, seamless left-to-right news-style institutional partner marquee */
+@keyframes marquee-ltr {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+.partner-marquee-track {
+  animation: marquee-ltr 46s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-marquee-track {
+    animation: none;
+    transform: none;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    padding-inline: 1rem;
+  }
+  .programme-progress-bar {
+    animation: none;
+    transform: scaleX(1);
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

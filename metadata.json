@@ -1,0 +1,8 @@
+{
+  "name": "ASRAN — Association for Social Reform Awareness of Nigeria",
+  "description": "Official organisational website of the Association for Social Reform Awareness of Nigeria (ASRAN), a Katsina-based non-governmental charity organisation advancing education, health, child protection, and community empowerment since 1999.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
