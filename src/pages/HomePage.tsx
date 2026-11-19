@@ -128,8 +128,7 @@ export function HomePage({
     return () => mq.removeEventListener('change', sync);
   }, []);
 
-  const isAutoPlaying =
-    !isProgrammePaused && !isProgrammeInteracting && !prefersReducedMotion;
+  const isAutoPlaying = !isProgrammePaused && !isProgrammeInteracting;
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -618,14 +617,6 @@ export function HomePage({
       {/* 6. Smoothly Animated Sequential Seven-Pillar Programme Explorer */}
       <section
         aria-label="Seven Core Programmes sequential showcase"
-        onMouseEnter={() => setIsProgrammeInteracting(true)}
-        onMouseLeave={() => setIsProgrammeInteracting(false)}
-        onFocusCapture={() => setIsProgrammeInteracting(true)}
-        onBlurCapture={(e) => {
-          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
-            setIsProgrammeInteracting(false);
-          }
-        }}
         className="py-14 sm:py-20 bg-white"
       >
         <div className="max-w-[1180px] mx-auto px-4 sm:px-6 space-y-8 sm:space-y-10">
@@ -663,7 +654,12 @@ export function HomePage({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setIsProgrammePaused((prev) => !prev)}
+                  onClick={() => {
+                    if (isProgrammePaused) {
+                      setCycleTick((t) => t + 1);
+                    }
+                    setIsProgrammePaused((prev) => !prev);
+                  }}
                   aria-label={
                     isProgrammePaused ? 'Resume programme rotation' : 'Pause programme rotation'
                   }
@@ -701,7 +697,20 @@ export function HomePage({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-7 items-start">
+          <div
+            onPointerEnter={(e) => {
+              if (e.pointerType === 'mouse') {
+                setIsProgrammeInteracting(true);
+              }
+            }}
+            onPointerLeave={(e) => {
+              if (e.pointerType === 'mouse') {
+                setIsProgrammeInteracting(false);
+                setCycleTick((prev) => prev + 1);
+              }
+            }}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-7 items-start"
+          >
             {/* Responsive 7-Pillar Selector: Horizontal Snap Rail on Mobile/Tablet, Vertical Stack on Desktop */}
             <div
               ref={programmeStripRef}
